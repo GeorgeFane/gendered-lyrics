@@ -1,74 +1,76 @@
 import * as React from 'react';
 import { DataGrid } from '@material-ui/data-grid';
-import { Grid, Typography, Toolbar, Box, Paper } from '@material-ui/core';
+import { Typography, Toolbar, Box, Paper, Grid } from '@material-ui/core';
 
 import axios from 'axios';
-import Map from './Map';
 import Header from './Header';
-import Card from './Card';
-import Accordion from './Accordion';
+import Body from './Grid';
 
-const url = 'https://us-central1-georgefane.cloudfunctions.net/mdining'
-
-const width = 122;
-const columns = [
-    { field: 'Hall', width },
-    { field: 'Meal', width },
-    { field: 'Open', width },
-    { field: 'Close', width },
-    { field: 'isOpen', type: 'boolean', width },
-];
+const url = 'https://raw.githubusercontent.com/beloiual/gendered-lyrics/main/React.JS/src/src/totalData.json'
 
 class App extends React.Component {
     constructor (props) {
         super(props);
+        
         this.state = {
-            rows: [],
-            row: {},
-            loading: true,
-            Courses: '',
+            data: {},
+            disabled: true,
+
+            value: null,
+            word: 'hello',
         };
+    }
+
+    setValue = (word) => {
+        this.setState({ word });
+    }
+
+    load = () => {
+        const { data, word } = this.state;
+
+        return Object.entries(data).map( ([gender, genres]) => (
+            Object.entries(genres).map( ([genre, words]) => {
+                const reducer = (accumulator, currentValue) => (
+                    accumulator + currentValue
+                );
+                console.log(words)
+                const frequency = words[word] ?
+                    words[word] * 500000 / Object.values(words).reduce(reducer) :
+                    null;
+                return (
+                    <Grid item xs>
+                        {[gender, genre, frequency].join(' ')}
+                    </Grid>
+                );
+            })
+        )).flat(3);
     }
 
     async componentDidMount() {
-        const resp = await axios.get(url);
-        const rows = resp.data.data.map( (row, id) => ({ id, ...row }) );
-        const loading = false;
-        this.setState({ rows, loading });
+        const resp = await axios.get(url)
+        console.log(resp);
+        const { data } = resp;
+
+        const disabled = false;
+        this.setState({ data, disabled });
     }
 
-    render () {
-        const { rows, row, loading, Courses } = this.state;
-        const data = {
-            rows, columns, loading, autoHeight: true,
-            onRowClick: data => {
-                const { row } = data;
-                this.setState({ row });
-            }
-        };
+    render() {
+        const { data, items, disabled } = this.state;
 
-        const lat = 42.28156557881266;
-        const lng = -83.72879591738906;
-        const center = { lat, lng };
-        const zoom = 12;
-        const mapProps = { center, zoom, rows };
-
-        return <div>
-            <Header />
-            <Toolbar />
+        return (
             <div>
-                <Grid container spacing={1}>
-                    <Grid item xs>
-                        <DataGrid {...data} />;
-                        <Accordion children={<Map {...mapProps} />} />
-                    </Grid>
-                    
-                    <Grid item xs>
-                        <Card row={row} />
-                    </Grid>
+                <Header />
+                <Toolbar />
+                <Body
+                    setValue={this.setValue}
+                    disabled={disabled}
+                />
+                <Grid container spacing={3}>
+                    {this.load()}
                 </Grid>
             </div>
-        </div>
+        );
     }
 }
 

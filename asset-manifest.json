@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/mdining/static/js/main.0639f87e.chunk.js",
-    "main.js.map": "/mdining/static/js/main.0639f87e.chunk.js.map",
-    "runtime-main.js": "/mdining/static/js/runtime-main.28de7f79.js",
-    "runtime-main.js.map": "/mdining/static/js/runtime-main.28de7f79.js.map",
-    "static/js/2.968d519b.chunk.js": "/mdining/static/js/2.968d519b.chunk.js",
-    "static/js/2.968d519b.chunk.js.map": "/mdining/static/js/2.968d519b.chunk.js.map",
-    "index.html": "/mdining/index.html",
-    "static/js/2.968d519b.chunk.js.LICENSE.txt": "/mdining/static/js/2.968d519b.chunk.js.LICENSE.txt"
+    "main.js": "/gendered-lyrics/static/js/main.2f47c9bc.chunk.js",
+    "main.js.map": "/gendered-lyrics/static/js/main.2f47c9bc.chunk.js.map",
+    "runtime-main.js": "/gendered-lyrics/static/js/runtime-main.08dc0f7e.js",
+    "runtime-main.js.map": "/gendered-lyrics/static/js/runtime-main.08dc0f7e.js.map",
+    "static/js/2.a3bc3fd6.chunk.js": "/gendered-lyrics/static/js/2.a3bc3fd6.chunk.js",
+    "static/js/2.a3bc3fd6.chunk.js.map": "/gendered-lyrics/static/js/2.a3bc3fd6.chunk.js.map",
+    "index.html": "/gendered-lyrics/index.html",
+    "static/js/2.a3bc3fd6.chunk.js.LICENSE.txt": "/gendered-lyrics/static/js/2.a3bc3fd6.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.28de7f79.js",
-    "static/js/2.968d519b.chunk.js",
-    "static/js/main.0639f87e.chunk.js"
+    "static/js/runtime-main.08dc0f7e.js",
+    "static/js/2.a3bc3fd6.chunk.js",
+    "static/js/main.2f47c9bc.chunk.js"
   ]
 }

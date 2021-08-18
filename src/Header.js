@@ -42,10 +42,6 @@ export default function ButtonAppBar() {
                         Made by Alex Beloiu, Yongwei Che, and George Fane
                     </Typography>
 
-                    <Typography variant="body1" className={classes.title}>
-                        Displays lyric frequency by song genre and artist gender
-                    </Typography>
-
                     <IconButton
                         color="inherit"
                         href='https://github.com/GeorgeFane/mdining/tree/source'

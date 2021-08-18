@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     paper: {
         padding: theme.spacing(2),
         textAlign: 'center',
-        color: theme.palette.text.secondary,
     },
 }));
 
@@ -38,16 +37,15 @@ export default function CenteredGrid(props) {
                 <Grid item xs>
                     <form
                         className={classes.root}
-                        noValidate
-                        autoComplete="off"
                         onSubmit={(event) => {
                             event.preventDefault();
                             props.setValue(value)
                         }}
                     >
                         <TextField
-                            label="Outlined"
+                            label="Search Lyric"
                             variant="outlined"
+                            helperText={'Searched: ' + props.value}
                             onChange={onChange}
                         />
                     </form>

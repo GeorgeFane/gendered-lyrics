@@ -4,7 +4,8 @@ import { Typography, Toolbar, Box, Paper, Grid } from '@material-ui/core';
 
 import axios from 'axios';
 import Header from './Header';
-import Body from './Grid';
+import Body from './Body';
+import BubbleChart from './BubbleChart';
 
 const url = 'https://raw.githubusercontent.com/beloiual/gendered-lyrics/main/React.JS/src/src/totalData.json'
 
@@ -17,58 +18,64 @@ class App extends React.Component {
             disabled: true,
 
             value: null,
-            word: 'hello',
+            rows: [],
         };
     }
 
-    setValue = (word) => {
-        this.setState({ word });
-    }
+    setValue = (value) => {
+        const { data } = this.state;
+        console.log(data)
 
-    load = () => {
-        const { data, word } = this.state;
-
-        return Object.entries(data).map( ([gender, genres]) => (
-            Object.entries(genres).map( ([genre, words]) => {
+        const array = Object.entries(data).map( ([gender, genres], y) => (
+            Object.entries(genres).map( ([genre, words], x) => {
                 const reducer = (accumulator, currentValue) => (
                     accumulator + currentValue
                 );
-                console.log(words)
-                const frequency = words[word] ?
-                    words[word] * 500000 / Object.values(words).reduce(reducer) :
-                    null;
-                return (
-                    <Grid item xs>
-                        {[gender, genre, frequency].join(' ')}
-                    </Grid>
-                );
+                const size = !words[value] ? 0 :
+                    words[value] * 5000000 / Object.values(words).reduce(reducer);
+                    
+                const text = size ? genre + ': ' + gender : '';
+                const height = y + (x % 2) * 0.2;
+                
+                return [ genre, height, size, text ];
             })
-        )).flat(3);
+        )).flat(1);
+        console.log(array)
+
+        // transpose
+        const rows = array[0].map((_, colIndex) => array.map(row => row[colIndex]));
+        this.setState({ rows, value });
     }
 
     async componentDidMount() {
         const resp = await axios.get(url)
-        console.log(resp);
         const { data } = resp;
 
         const disabled = false;
         this.setState({ data, disabled });
+
+        this.setValue('hello');
     }
 
     render() {
-        const { data, items, disabled } = this.state;
+        const { disabled, value, rows } = this.state;
+        console.log(value)
 
         return (
             <div>
                 <Header />
                 <Toolbar />
+
                 <Body
                     setValue={this.setValue}
                     disabled={disabled}
+                    value={value}
                 />
-                <Grid container spacing={3}>
-                    {this.load()}
-                </Grid>
+
+                <BubbleChart
+                    data={rows}
+                    value={value}
+                />
             </div>
         );
     }
